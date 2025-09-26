@@ -7,46 +7,114 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
       margin: 0;
       background: #f4f4f9;
+      color: #222;
     }
 
-    h2 {
-      margin-bottom: 15px;
+    .page {
+      max-width: 1200px;
+      padding: 24px;
+      margin: 0 auto;
     }
 
-    .map {
+    header h2 {
+      margin: 0 0 16px 0;
+      font-weight: 600;
+    }
+
+    .gallery {
       display: grid;
-      grid-template-columns: repeat(2, auto); /* 2 columns */
-      grid-gap: 2px; /* looks like walls */
-      background: #333; /* wall effect */
-      padding: 4px;
+      grid-template-columns: 1fr; /* mobile: 1 per row */
+      gap: 16px;
+      grid-template-areas:
+        "hod"
+        "classroom"
+        "seminar"
+        "lab";
     }
 
-    .room {
-      border: 2px solid #000;
+    @media (min-width: 600px) {
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* tablets: 2 per row */
+        grid-template-areas:
+          "hod classroom"
+          "seminar lab";
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr)); /* desktop: 2x2 */
+        grid-template-areas:
+          "hod classroom"
+          "seminar lab";
+      }
+    }
+
+    .gallery-item {
+      position: relative; /* needed for overlay */
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
       overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      aspect-ratio: 1 / 1; /* campus tile shape */
     }
 
-    .room img {
+    .gallery-item img {
       display: block;
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover; /* keep aspect ratio without stretching */
+      transition: transform 0.3s ease;
     }
 
-    .room:hover {
-      transform: scale(1.05);
-      z-index: 2;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+
+    .gallery-item:hover {
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18), 0 0 0 2px rgba(46, 125, 50, 0.15);
+      transform: perspective(900px) translateY(-6px) scale(1.02) rotateX(2deg) rotateY(1.5deg);
+    }
+
+    /* keyboard focus parity */
+    .gallery-item:focus-within {
+      outline: 3px solid rgba(46, 125, 50, 0.4);
+      outline-offset: 2px;
+    }
+
+    /* map areas */
+    .hod { grid-area: hod; }
+    .classroom { grid-area: classroom; }
+    .seminar { grid-area: seminar; }
+    .lab { grid-area: lab; }
+
+    /* Caption overlay */
+    .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 16px;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: all 0.3s ease;
+    }
+
+    .gallery-item:hover .caption {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .back-btn {
+      display: inline-block;
       margin-top: 20px;
       text-decoration: none;
       background: #2E7D32;
@@ -62,22 +130,34 @@
   </style>
 </head>
 <body>
-  <h2>Campus Map</h2>
-  <div class="map">
-    <div class="room">
-      <img src="/images/Screenshot 2025-09-04 203515.png" alt="HOD Cabin">
-    </div>
-    <div class="room">
-      <img src="/images/Screenshot 2025-09-04 203731.png" alt="Classroom">
-    </div>
-    <div class="room">
-      <img src="/images/Screenshot 2025-09-04 203742.png" alt="Seminar Hall">
-    </div>
-    <div class="room">
-      <img src="/images/Screenshot 2025-09-04 203924.png" alt="Lab">
-    </div>
-  </div>
+  <main class="page" role="main">
+    <header>
+      <h2>Campus Map</h2>
+    </header>
 
-  <a class="back-btn" href="index.html">⬅ Back</a>
+    <section class="gallery" aria-label="Top-view infrastructure images">
+      <figure class="gallery-item hod">
+        <img src="images/Screenshot 2025-09-04 203515.png" alt="HOD Cabin top view">
+        <figcaption class="caption">HOD Cabin</figcaption>
+      </figure>
+
+      <figure class="gallery-item classroom">
+        <img src="images/Screenshot 2025-09-04 203731.png" alt="Classroom top view">
+        <figcaption class="caption">Classroom</figcaption>
+      </figure>
+
+      <figure class="gallery-item seminar">
+        <img src="images/Screenshot 2025-09-04 203742.png" alt="Seminar Hall top view">
+        <figcaption class="caption">Seminar Hall</figcaption>
+      </figure>
+
+      <figure class="gallery-item lab">
+        <img src="images/Screenshot 2025-09-04 203924.png" alt="Lab top view">
+        <figcaption class="caption">Lab</figcaption>
+      </figure>
+    </section>
+
+    <a class="back-btn" href="index.html">⬅ Back</a>
+  </main>
 </body>
 </html>

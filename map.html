@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Map</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f4f4f9;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: repeat(2, auto); /* 2 columns */
+      grid-gap: 2px; /* looks like walls */
+      background: #333; /* wall effect */
+      padding: 4px;
+    }
+
+    .room {
+      border: 2px solid #000;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .room img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .room:hover {
+      transform: scale(1.05);
+      z-index: 2;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      text-decoration: none;
+      background: #2E7D32;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover {
+      background: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+  <h2>Campus Map</h2>
+  <div class="map">
+    <div class="room">
+      <img src="/images/Screenshot 2025-09-04 203515.png" alt="HOD Cabin">
+    </div>
+    <div class="room">
+      <img src="/images/Screenshot 2025-09-04 203731.png" alt="Classroom">
+    </div>
+    <div class="room">
+      <img src="/images/Screenshot 2025-09-04 203742.png" alt="Seminar Hall">
+    </div>
+    <div class="room">
+      <img src="/images/Screenshot 2025-09-04 203924.png" alt="Lab">
+    </div>
+  </div>
+
+  <a class="back-btn" href="index.html">⬅ Back</a>
+</body>
+</html>
